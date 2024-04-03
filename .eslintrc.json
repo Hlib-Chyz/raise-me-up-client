@@ -1,3 +1,72 @@
 {
-  "extends": "next/core-web-vitals"
+    "root": true,
+    "overrides": [
+        {
+            "files": ["*.ts", "*.tsx"],
+            "env": {
+                "es6": true
+            },
+            "parserOptions": {
+                "project": ["tsconfig.json"],
+                "createDefaultProgram": true
+            },
+            "extends": [
+                "eslint:recommended",
+                "plugin:@next/next/recommended",
+                "plugin:prettier/recommended",
+                "next"
+            ],
+            "rules": {
+                "no-alert": "off",
+                "@angular-eslint/no-output-on-prefix": "off",
+                "import/no-unresolved": "off",
+                "import/no-extraneous-dependencies": "off",
+                "import/prefer-default-export": "off",
+                "node/no-unpublished-import": "off",
+                "no-underscore-dangle": "off",
+                "no-console": "error",
+                "no-plusplus": "off",
+                "lines-between-class-members": "off",
+                "no-return-assign": "off",
+                "@typescript-eslint/no-empty-function": "off",
+                "class-methods-use-this": "off",
+                "node/no-missing-require": "off",
+                "node/shebang": "off",
+                "no-dupe-class-members": "error",
+                "no-param-reassign": ["error", { "props": false }],
+                "require-atomic-updates": "error",
+                "@typescript-eslint/no-inferrable-types": "off",
+                "node/no-extraneous-import": "off",
+                "quotes": "off",
+                "import/no-cycle": "off",
+                "@typescript-eslint/quotes": "off",
+                "@typescript-eslint/typedef": "off",
+                "import/extensions": "off",
+                "@angular-eslint/no-input-rename": "off"
+            }
+        },
+        {
+            "files": ["*.html"],
+            "extends": ["plugin:prettier/recommended"],
+            "rules": {
+                "@typescript-eslint/indent": "off"
+            }
+        },
+        {
+            "files": ["*.js"],
+            "extends": ["eslint:recommended", "plugin:prettier/recommended"],
+            "parserOptions": {
+                "ecmaVersion": 2020
+            },
+            "env": {
+                "browser": true,
+                "node": true,
+                "es6": true
+            }
+        },
+        {
+            "files": ["*.json"],
+            "extends": ["plugin:prettier/recommended"]
+        }
+    ]
 }

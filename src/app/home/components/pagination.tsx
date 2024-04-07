@@ -1,25 +1,27 @@
 'use client';
-import React, { useState } from 'react';
+import { getPaginationState, setCurrentPage } from '@/store/slices/paginationSlice';
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 export default function Pagination() {
-    const points = ['English', 'NEXT', 'NEST', 'Mongodb', 'Tailwind', 'Redux', 'Tests'];
-    const [current, setCurrent] = useState(0);
+    const { currentPage, pages } = useSelector(getPaginationState);
+    const dispatch = useDispatch();
     return (
         <div className="h-64 px-88 flex items-center justify-between border-b border-light-grey">
-            {points.map((point, index) => (
-                <React.Fragment key={point}>
+            {pages.map((page) => (
+                <React.Fragment key={page.id}>
                     <button
-                        onClick={() => setCurrent(index)}
-                        className={`flex gap-12 body-medium-bold text-light-grey items-center ${current === index ? 'text-purple' : ''}`}>
+                        onClick={() => dispatch(setCurrentPage(page.id))}
+                        className={`flex gap-12 body-medium-bold text-light-grey items-center ${currentPage === page.id ? 'text-purple' : ''}`}>
                         <div
-                            className={`h-28 w-28 flex items-center justify-center bg-light-grey text-white rounded-4 ${current === index ? 'text-white bg-purple' : ''}`}>
-                            {index + 1}
+                            className={`h-28 w-28 flex items-center justify-center bg-light-grey text-white rounded-4 ${currentPage === page.id ? 'text-white bg-purple' : ''}`}>
+                            {page.id + 1}
                         </div>
-                        <div>{point}</div>
+                        <div>{page.name}</div>
                     </button>
                     <div
                         className={
-                            index !== points.length - 1 ? 'w-42 h-1 bg-light-grey' : ''
+                            page.id !== pages.length - 1 ? 'w-42 h-1 bg-light-grey' : ''
                         }></div>
                 </React.Fragment>
             ))}

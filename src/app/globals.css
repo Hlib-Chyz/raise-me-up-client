@@ -5,3 +5,15 @@
 .body-medium-bold {
     @apply font-open-sans text-15 font-700 leading-20 text-left;
 }
+.button-large {
+    @apply font-open-sans text-15 font-600 leading-20 text-left;
+}
+.button {
+    @apply button-large h-48 px-24 rounded-4 border disabled:opacity-40;
+}
+.primary-button {
+    @apply button text-white bg-purple border-purple;
+}
+.secondary-button {
+    @apply button text-black bg-lighter-grey border-light-grey;
+}

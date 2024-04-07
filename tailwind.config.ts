@@ -7,14 +7,21 @@ const config: Config = {
         './src/app/**/*.{js,ts,jsx,tsx,mdx}',
     ],
     theme: {
+        screens: {
+            desktop: '1400px',
+        },
         fontSize: {
+            13: '13px',
             15: '15px',
             16: '16px',
+            18: '18px',
             23: '23px',
         },
         lineHeight: {
+            18: '18px',
             20: '20px',
             22: '22px',
+            24: '24px',
             31: '31px',
         },
         fontWeight: {
@@ -44,10 +51,12 @@ const config: Config = {
             6: '6px',
             12: '12px',
             16: '16px',
+            18: '18px',
             24: '24px',
             28: '28px',
             42: '42px',
             48: '48px',
+            52: '52px',
             64: '64px',
             68: '68px',
             88: '88px',

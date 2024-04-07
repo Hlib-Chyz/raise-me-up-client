@@ -14,6 +14,14 @@
 .heading-h5-bold {
     @apply text-23 font-700 leading-31;
 }
+.heading-h6-bold {
+    @apply text-18 font-700 leading-24;
+}
+
+.forms-hint {
+    @apply text-13 font-400 leading-18;
+}
+
 .button {
     @apply button-large h-48 px-24 rounded-4 border disabled:opacity-40;
 }

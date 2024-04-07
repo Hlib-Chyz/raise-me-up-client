@@ -9,16 +9,18 @@ const config: Config = {
     theme: {
         fontSize: {
             15: '15px',
-        },
-        fontFamily: {
-            'open-sans': ['Open Sans', 'sans-serif'],
+            16: '16px',
+            23: '23px',
         },
         lineHeight: {
             20: '20px',
+            22: '22px',
+            31: '31px',
         },
         fontWeight: {
-            700: '700',
+            400: '400',
             600: '600',
+            700: '700',
         },
         colors: {
             purple: '#631ed3',
@@ -26,14 +28,22 @@ const config: Config = {
             'lighter-grey': '#f7f9fb',
             white: '#ffffff',
             black: '#353F48',
+            dark: '#000000',
+            aquamarine: '#00B1CB0F',
         },
         borderRadius: {
+            2: '2px',
             4: '4px',
+        },
+        boxShadow: {
+            standard: '0px 5px 20px 0px #2C30340F',
         },
         spacing: {
             0: '0',
             1: '1px',
+            6: '6px',
             12: '12px',
+            16: '16px',
             24: '24px',
             28: '28px',
             42: '42px',

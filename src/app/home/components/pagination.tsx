@@ -6,11 +6,21 @@ import { useDispatch, useSelector } from 'react-redux';
 export default function Pagination() {
     const { currentPage, pages } = useSelector(getPaginationState);
     const dispatch = useDispatch();
+    const leftArrowKeyCode = 'ArrowLeft';
+    const rightArrowKeyCode = 'ArrowRight';
+    const onKeyDown = (e: KeyboardEvent) => {
+        if (e.key === leftArrowKeyCode && currentPage !== 0) {
+            dispatch(setCurrentPage(currentPage - 1));
+        } else if (e.key === rightArrowKeyCode && currentPage !== pages.length - 1) {
+            dispatch(setCurrentPage(currentPage + 1));
+        }
+    };
     return (
         <div className="h-64 px-88 flex items-center justify-between border-b border-light-grey">
             {pages.map((page) => (
                 <React.Fragment key={page.id}>
                     <button
+                        onKeyDown={(e) => onKeyDown(e as unknown as KeyboardEvent)}
                         onClick={() => dispatch(setCurrentPage(page.id))}
                         className={`flex gap-12 body-medium-bold text-light-grey items-center ${currentPage === page.id ? 'text-purple' : ''}`}>
                         <div

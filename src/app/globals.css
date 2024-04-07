@@ -3,10 +3,16 @@
 @tailwind utilities;
 
 .body-medium-bold {
-    @apply font-open-sans text-15 font-700 leading-20 text-left;
+    @apply text-15 font-700 leading-20;
 }
 .button-large {
-    @apply font-open-sans text-15 font-600 leading-20 text-left;
+    @apply text-15 font-600 leading-20;
+}
+.body-medium-regular {
+    @apply text-16 font-400 leading-22;
+}
+.heading-h5-bold {
+    @apply text-23 font-700 leading-31;
 }
 .button {
     @apply button-large h-48 px-24 rounded-4 border disabled:opacity-40;

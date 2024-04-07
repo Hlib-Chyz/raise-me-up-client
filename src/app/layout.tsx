@@ -1,9 +1,12 @@
-import React from 'react';
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
+import { Open_Sans } from 'next/font/google';
+import React from 'react';
 import './globals.css';
 
-const inter = Inter({ subsets: ['latin'] });
+const openSans = Open_Sans({
+    subsets: ['latin'],
+    display: 'swap',
+});
 
 export const metadata: Metadata = {
     title: 'Review 2024',
@@ -16,8 +19,8 @@ export default function RootLayout({
     children: React.ReactNode;
 }>) {
     return (
-        <html lang="en">
-            <body className={inter.className}>{children}</body>
+        <html lang="en" className={openSans.className}>
+            <body>{children}</body>
         </html>
     );
 }

@@ -1,3 +1,11 @@
+import Buttons from './components/buttons';
+import Pagination from './components/pagination';
+
 export default function Home() {
-    return <div className="text-purple p-16">lkjlhkgjfhgcnvbn</div>;
+    return (
+        <div>
+            <Pagination />
+            <Buttons />
+        </div>
+    );
 }

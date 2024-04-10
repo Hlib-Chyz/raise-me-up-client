@@ -5,9 +5,8 @@ export default function Header() {
     const [commits, setCommits] = useState(0);
 
     useEffect(() => {
-        const socket = io('https://0331-213-231-38-52.ngrok-free.app');
+        const socket = io('http://localhost:3000');
         socket.on('commitsUpdate', (data) => {
-            console.log(123);
             setCommits(data.count);
         });
 

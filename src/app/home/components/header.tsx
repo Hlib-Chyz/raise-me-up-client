@@ -9,7 +9,7 @@ export default function Header() {
         socket.on('commitsUpdate', (data) => {
             setCommits(data.count);
         });
-
+        fetch('http://localhost:3000/github/commits');
         return () => {
             socket.disconnect();
         };

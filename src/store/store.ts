@@ -1,14 +1,17 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { useDispatch as useDispatchBase, useSelector as useSelectorBase } from 'react-redux';
 import paginationSlice, { IPaginationState } from './slices/paginationSlice';
+import dataSlice, { IDataState } from './slices/dataSlice';
 
 export interface IStore {
     pagination: IPaginationState;
+    data: IDataState;
 }
 
 export const store = configureStore<IStore>({
     reducer: {
         pagination: paginationSlice,
+        data: dataSlice,
     },
 });
 

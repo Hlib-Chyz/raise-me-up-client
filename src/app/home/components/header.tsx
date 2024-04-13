@@ -18,7 +18,7 @@ export default function Header() {
         };
     }, []);
     return (
-        <div className="h-72 px-88 flex flex-row items-center justify-end border-b border-light-grey bg-white">
+        <div className="h-72 flex flex-row items-center justify-end border-b border-light-grey bg-white px-16 desktop:px-88">
             <div className="button-large text-purple">Total commits: {commits}</div>
         </div>
     );

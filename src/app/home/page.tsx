@@ -5,6 +5,7 @@ import Buttons from './components/buttons';
 import Pagination from './components/pagination';
 import Content from './components/content';
 import Header from './components/header';
+import PagePopup from './components/page-popup';
 
 export default function Home() {
     return (
@@ -14,6 +15,7 @@ export default function Home() {
                 <Pagination />
                 <Content />
                 <Buttons />
+                <PagePopup />
             </div>
         </Provider>
     );

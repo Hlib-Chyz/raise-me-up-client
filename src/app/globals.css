@@ -17,11 +17,12 @@
 .heading-h6-bold {
     @apply text-18 font-700 leading-24;
 }
-
 .forms-hint {
     @apply text-13 font-400 leading-18;
 }
-
+.label {
+    @apply text-15 font-600 leading-20 text-grey-primary pb-6;
+}
 .button {
     @apply button-large h-48 px-24 rounded-4 border disabled:opacity-40;
 }
@@ -30,4 +31,38 @@
 }
 .secondary-button {
     @apply button text-black bg-lighter-grey border-light-grey;
+}
+
+input,
+textarea {
+    box-sizing: border-box;
+    height: 38px;
+    min-width: 500px;
+    border-radius: 4px;
+    padding: 9px 12px;
+    border: 1px solid #dce0e4;
+    outline: none;
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 20px;
+    color: #353f48;
+    background-color: #ffffff;
+}
+input:focus-visible,
+textarea:focus-visible {
+    border-color: #631ed3;
+    box-shadow: 0px 0px 0px 3px #631ed338;
+}
+input.ng-touched.ng-invalid,
+textarea.ng-touched.ng-invalid {
+    border-color: #ff4656;
+    box-shadow: none;
+}
+input.ng-touched.ng-invalid:focus-visible,
+textarea.ng-touched.ng-invalid:focus-visible {
+    box-shadow: 0px 0px 0px 3px rgba(255, 0, 0, 0.22);
+}
+input.disabled,
+textarea.disabled {
+    opacity: 0.4;
 }

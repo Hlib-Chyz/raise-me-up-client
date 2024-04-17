@@ -1,7 +1,9 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { useDispatch as useDispatchBase, useSelector as useSelectorBase } from 'react-redux';
-import paginationSlice, { IPaginationState } from './slices/paginationSlice';
-import dataSlice, { IDataState } from './slices/dataSlice';
+import paginationSlice from './slices/paginationSlice';
+import dataSlice from './slices/dataSlice';
+import { IDataState } from '@/shared/types/data.types';
+import { IPaginationState } from '@/shared/types/page.types';
 
 export interface IStore {
     pagination: IPaginationState;

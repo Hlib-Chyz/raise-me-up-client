@@ -33,6 +33,7 @@ const config: Config = {
             purple: '#631ed3',
             'light-grey': '#dce0e4',
             'lighter-grey': '#f7f9fb',
+            'grey-primary': '#5e6973',
             white: '#ffffff',
             black: '#353F48',
             dark: '#000000',

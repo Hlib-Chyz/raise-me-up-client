@@ -1,3 +1,4 @@
+import { IDataState } from '@/shared/types/data.types';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
 export const getNumberOfCommits = createAsyncThunk('data/fetch', async (_, { rejectWithValue }) => {
@@ -10,10 +11,6 @@ export const getNumberOfCommits = createAsyncThunk('data/fetch', async (_, { rej
         return rejectWithValue(error);
     }
 });
-
-export interface IDataState {
-    loading: boolean;
-}
 
 const initialState: IDataState = {
     loading: false,

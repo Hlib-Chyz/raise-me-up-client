@@ -1,15 +1,14 @@
 'use client';
-import { store } from '@/store/store';
-import { Provider } from 'react-redux';
+import StoreProvider from '../StoreProvider';
 import Buttons from './components/buttons';
-import Pagination from './components/pagination';
 import Content from './components/content';
 import Header from './components/header';
 import PagePopup from './components/page-popup';
+import Pagination from './components/pagination';
 
 export default function Home() {
     return (
-        <Provider store={store}>
+        <StoreProvider>
             <div>
                 <Header />
                 <Pagination />
@@ -17,6 +16,6 @@ export default function Home() {
                 <Buttons />
                 <PagePopup />
             </div>
-        </Provider>
+        </StoreProvider>
     );
 }

@@ -1,3 +1,4 @@
+import { IPage, IPageState } from '@/shared/types/page.types';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
 export const fetchPages = createAsyncThunk('pages/fetchPages', async () => {
@@ -26,48 +27,32 @@ export const deletePage = createAsyncThunk('pages/deletePage', async (pageId) =>
     return pageId;
 });
 
-export const updatePage = createAsyncThunk('pages/updatePage', async ({ pageId, pageData }) => {
-    const response = await fetch(`http://localhost:3000/pages/${pageId}`, {
-        method: 'PUT',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(pageData),
-    });
-    return response.json();
-});
+export const updatePage = createAsyncThunk(
+    'pages/updatePage',
+    async ({ pageId, pageData }: { pageId: string; pageData: IPage }) => {
+        const response = await fetch(`http://localhost:3000/pages/${pageId}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(pageData),
+        });
+        return response.json();
+    },
+);
+
+const initialState: IPageState = {
+    pages: [],
+};
 
 const pagesSlice = createSlice({
     name: 'pages',
-    initialState: {
-        pages: [],
-        status: 'idle', // 'idle' | 'loading' | 'succeeded' | 'failed'
-        error: null,
-    },
+    initialState,
     reducers: {},
     extraReducers: (builder) => {
-        builder
-            .addCase(fetchPages.pending, (state) => {
-                state.status = 'loading';
-            })
-            .addCase(fetchPages.fulfilled, (state, action) => {
-                state.status = 'succeeded';
-                state.pages = action.payload;
-            })
-            .addCase(fetchPages.rejected, (state, action) => {
-                state.status = 'failed';
-                state.error = action.error.message;
-            })
-            .addCase(addPage.fulfilled, (state, action) => {
-                state.pages.push(action.payload);
-            })
-            .addCase(deletePage.fulfilled, (state, action) => {
-                state.pages = state.pages.filter((page) => page.id !== action.payload);
-            })
-            .addCase(updatePage.fulfilled, (state, action) => {
-                const index = state.pages.findIndex((page) => page.id === action.payload.id);
-                state.pages[index] = action.payload;
-            });
+        builder.addCase(fetchPages.fulfilled, (state, action) => {
+            state.pages = action.payload;
+        });
     },
 });
 

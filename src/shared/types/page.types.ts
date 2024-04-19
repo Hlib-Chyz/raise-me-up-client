@@ -16,3 +16,7 @@ export interface IListItem {
     bold: string;
     regular: string;
 }
+
+export interface IPageState {
+    pages: IPage[];
+}

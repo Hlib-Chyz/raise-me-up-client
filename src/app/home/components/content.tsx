@@ -10,7 +10,7 @@ export default function Content({
     page: IPage | null | undefined;
     removePage?: MouseEventHandler<HTMLButtonElement>;
     editPage?: MouseEventHandler<HTMLButtonElement>;
-}) {
+}): React.JSX.Element {
     return (
         <div className="pb-68">
             <div className="flex flex-col gap-18 desktop:mb-24 bg-aquamarine border rounded-2 border-light-grey shadow-standard m-16 p-12 desktop:mx-88 desktop:my-24 desktop:p-24">

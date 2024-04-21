@@ -14,8 +14,10 @@
                 "eslint:recommended",
                 "plugin:@next/next/recommended",
                 "plugin:prettier/recommended",
+                "plugin:@typescript-eslint/recommended",
                 "next"
             ],
+            "plugins": ["@typescript-eslint"],
             "rules": {
                 "no-alert": "off",
                 "@angular-eslint/no-output-on-prefix": "off",
@@ -42,7 +44,38 @@
                 "@typescript-eslint/quotes": "off",
                 "@typescript-eslint/typedef": "off",
                 "import/extensions": "off",
-                "@angular-eslint/no-input-rename": "off"
+                "@angular-eslint/no-input-rename": "off",
+                "@typescript-eslint/explicit-function-return-type": [
+                    "error",
+                    {
+                        "allowExpressions": false,
+                        "allowTypedFunctionExpressions": true,
+                        "allowHigherOrderFunctions": true,
+                        "allowDirectConstAssertionInArrowFunctions": true,
+                        "allowConciseArrowFunctionExpressionsStartingWithVoid": false
+                    }
+                ],
+                "@typescript-eslint/naming-convention": [
+                    "error",
+                    {
+                        "selector": "interface",
+                        "format": ["PascalCase"],
+                        "custom": {
+                            "regex": "^I[A-Z]",
+                            "match": true
+                        }
+                    }
+                ],
+                "@typescript-eslint/no-non-null-assertion": "error",
+                "@typescript-eslint/no-use-before-define": "error",
+                "@typescript-eslint/no-var-requires": "error",
+                "@typescript-eslint/no-explicit-any": "error",
+                "@typescript-eslint/no-unused-vars": [
+                    "error",
+                    {
+                        "argsIgnorePattern": "^_"
+                    }
+                ]
             }
         },
         {

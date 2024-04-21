@@ -6,10 +6,10 @@ import {
     pagesState,
     setCurrentPage,
 } from '@/store/slices/pageSlice';
+import { useDispatch, useSelector } from '@/store/store';
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 
-export default function Pagination() {
+export default function Pagination(): React.JSX.Element {
     const pages = useSelector(pagesState);
     const currentPage = useSelector(currentPageState);
     const currentPageIndex = useSelector(currentPageIndexState);

@@ -7,7 +7,8 @@
         "build": "next build",
         "start": "next start",
         "lint": "next lint",
-        "format:json": "prettier --write \"**/*.json\""
+        "format:json": "prettier --write \"**/*.json\"",
+        "prepare": "husky"
     },
     "dependencies": {
         "@reduxjs/toolkit": "^2.2.3",
@@ -23,6 +24,8 @@
         "@types/node": "^20",
         "@types/react": "^18",
         "@types/react-dom": "^18",
+        "@typescript-eslint/eslint-plugin": "^7.7.0",
+        "@typescript-eslint/parser": "^7.7.0",
         "autoprefixer": "^10.0.1",
         "eslint": "^8",
         "eslint-config-next": "14.1.4",
@@ -33,7 +36,8 @@
         "postcss": "^8",
         "prettier": "^3.2.5",
         "tailwindcss": "^3.3.0",
-        "typescript": "^5.4.0"
+        "typescript": "^5.4.0",
+        "typescript-eslint": "^7.7.0"
     },
     "lint-staged": {
         "*.{js,jsx,ts,tsx}": "eslint --cache --fix",

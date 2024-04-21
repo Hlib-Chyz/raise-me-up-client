@@ -5,9 +5,9 @@ import {
     numberOfPagesState,
     previousPage,
 } from '@/store/slices/pageSlice';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from '@/store/store';
 
-export default function Buttons() {
+export default function Buttons(): React.JSX.Element {
     const dispatch = useDispatch();
     const currentPageIndex = useSelector(currentPageIndexState);
     const numberOfPages = useSelector(numberOfPagesState);

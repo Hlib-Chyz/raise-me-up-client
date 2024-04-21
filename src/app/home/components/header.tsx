@@ -4,7 +4,7 @@ import { useDispatch } from '@/store/store';
 import { useEffect, useState } from 'react';
 import { io } from 'socket.io-client';
 
-export default function Header() {
+export default function Header(): React.JSX.Element {
     const [commits, setCommits] = useState(0);
     const dispatch = useDispatch();
 
@@ -14,12 +14,12 @@ export default function Header() {
             setCommits(data.count);
         });
         dispatch(getNumberOfCommits());
-        return () => {
+        return (): void => {
             socket.disconnect();
         };
     }, [dispatch]);
 
-    const addPage = () => {
+    const addPage = (): void => {
         dispatch(showPopup());
     };
     return (

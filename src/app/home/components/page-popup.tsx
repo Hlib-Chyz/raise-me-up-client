@@ -8,11 +8,10 @@ import {
     isShowEditPopupState,
     updatePage,
 } from '@/store/slices/pageSlice';
-import { useDispatch } from '@/store/store';
+import { useDispatch, useSelector } from '@/store/store';
 import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
 
-export default function PagePopup() {
+export default function PagePopup(): React.JSX.Element {
     const dispatch = useDispatch();
     const [formData, setFormData] = useState({
         name: '',
@@ -24,6 +23,7 @@ export default function PagePopup() {
     });
     const currentPage = useSelector(currentPageState);
     const isShowEditPopup = useSelector(isShowEditPopupState);
+    const [list, setList] = useState<IListItem[]>([]);
     useEffect(() => {
         if (isShowEditPopup && currentPage) {
             setFormData({
@@ -33,8 +33,8 @@ export default function PagePopup() {
             });
             setList(currentPage.list);
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
-    const [list, setList] = useState<IListItem[]>([]);
     const [error, setErrors] = useState({
         name: null as string | null,
         heading: null as string | null,
@@ -43,7 +43,7 @@ export default function PagePopup() {
         bold: null as string | null,
         regular: null as string | null,
     });
-    const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
         const { name, value } = e.target;
         setFormData({
             ...formData,
@@ -61,9 +61,9 @@ export default function PagePopup() {
             });
         }
     };
-    const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    const handleSubmit = (e: FormEvent<HTMLFormElement>): void => {
         e.preventDefault();
-        // eslint-disable-next-line no-unused-vars
+        // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
         const { bold, regular, ...rest } = formData;
         if (isShowEditPopup) {
             dispatch(updatePage({ ...rest, list, _id: currentPage?._id ?? '' }));

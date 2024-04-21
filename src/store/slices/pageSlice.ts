@@ -2,7 +2,7 @@ import { IPage, IPageState } from '@/shared/types/page.types';
 import { Draft, PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { IStore } from '../store';
 
-export const fetchPages = createAsyncThunk('pages/fetchPages', async () => {
+export const fetchPages = createAsyncThunk('pages/fetchPages', async (): Promise<IPage[]> => {
     const response = await fetch('http://localhost:3000/pages');
     if (!response.ok) {
         throw new Error('Failed to fetch pages');
@@ -10,36 +10,45 @@ export const fetchPages = createAsyncThunk('pages/fetchPages', async () => {
     return response.json();
 });
 
-export const addPage = createAsyncThunk('pages/addPage', async (page: Omit<IPage, '_id'>) => {
-    const response = await fetch('http://localhost:3000/pages', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(page),
-    });
-    return response.json();
-});
+export const addPage = createAsyncThunk(
+    'pages/addPage',
+    async (page: Omit<IPage, '_id'>): Promise<IPage> => {
+        const response = await fetch('http://localhost:3000/pages', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(page),
+        });
+        return response.json();
+    },
+);
 
-export const deletePage = createAsyncThunk('pages/deletePage', async (pageId: string) => {
-    const response = await fetch(`http://localhost:3000/pages/${pageId}`, {
-        method: 'DELETE',
-    });
-    const res = await response.json();
-    return res.id;
-});
+export const deletePage = createAsyncThunk(
+    'pages/deletePage',
+    async (pageId: string): Promise<string> => {
+        const response = await fetch(`http://localhost:3000/pages/${pageId}`, {
+            method: 'DELETE',
+        });
+        const res = await response.json();
+        return res.id;
+    },
+);
 
-export const updatePage = createAsyncThunk('pages/updatePage', async (page: IPage) => {
-    const { _id, ...rest } = page;
-    const response = await fetch(`http://localhost:3000/pages/${_id}`, {
-        method: 'PUT',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(rest),
-    });
-    return response.json();
-});
+export const updatePage = createAsyncThunk(
+    'pages/updatePage',
+    async (page: IPage): Promise<IPage> => {
+        const { _id, ...rest } = page;
+        const response = await fetch(`http://localhost:3000/pages/${_id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(rest),
+        });
+        return response.json();
+    },
+);
 
 const initialState: IPageState = {
     pages: [],
@@ -116,11 +125,12 @@ export default pageSlice.reducer;
 export const { nextPage, previousPage, setCurrentPage, showPopup, hidePopup, showEditPopup } =
     pageSlice.actions;
 
-export const pagesState = (state: IStore) => state.page.pages;
-export const isShowPopupState = (state: IStore) => state.page.isShowPopup;
-export const isShowEditPopupState = (state: IStore) => state.page.isShowEditPopup;
-export const numberOfPagesState = (state: IStore) => state.page.pages.length;
-export const currentPageState = (state: IStore) => state.page.currentPage;
-export const currentPageIdState = (state: IStore) => state.page.currentPage?._id;
-export const currentPageIndexState = (state: IStore) =>
+export const pagesState = (state: IStore): IPage[] => state.page.pages;
+export const isShowPopupState = (state: IStore): boolean => state.page.isShowPopup;
+export const isShowEditPopupState = (state: IStore): boolean => state.page.isShowEditPopup;
+export const numberOfPagesState = (state: IStore): number => state.page.pages.length;
+export const currentPageState = (state: IStore): IPage | null | undefined => state.page.currentPage;
+export const currentPageIdState = (state: IStore): string | null | undefined =>
+    state.page.currentPage?._id;
+export const currentPageIndexState = (state: IStore): number =>
     pagesState(state).findIndex((page) => currentPageState(state)?._id === page._id);

@@ -29,6 +29,9 @@
 .primary-button {
     @apply button text-white bg-purple border-purple;
 }
+.remove-button {
+    @apply button text-white bg-red border-red;
+}
 .secondary-button {
     @apply button text-black bg-lighter-grey border-light-grey;
 }

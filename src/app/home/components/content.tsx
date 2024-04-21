@@ -1,24 +1,36 @@
 'use client';
 import { IPage } from '@/shared/types/page.types';
-import { currentPageState } from '@/store/slices/pageSlice';
+import { currentPageIdState, currentPageState, deletePage } from '@/store/slices/pageSlice';
+import { useDispatch } from '@/store/store';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 
 export default function Content({ currentPage }: { currentPage: IPage }) {
     const storePage = useSelector(currentPageState);
+    const currentPageId = useSelector(currentPageIdState);
+    const dispatch = useDispatch();
     const [page, setPage] = useState(currentPage);
 
     useEffect(() => {
-        if (storePage) {
+        if (storePage && storePage?._id !== page._id) {
             setPage(storePage);
         }
     }, [storePage]);
+
+    const removePage = () => {
+        dispatch(deletePage(currentPageId ?? ''));
+    };
     return (
         <div className="pb-68">
             <div className="flex flex-col gap-18 desktop:mb-24 bg-aquamarine border rounded-2 border-light-grey shadow-standard m-16 p-12 desktop:mx-88 desktop:my-24 desktop:p-24">
-                <h5 className="text-dark heading-h6-bold desktop:text-23 desktop:leading-31">
-                    {page?.heading}
-                </h5>
+                <div className="flex flex-row justify-between">
+                    <h5 className="text-dark heading-h6-bold desktop:text-23 desktop:leading-31">
+                        {page?.heading}
+                    </h5>
+                    <button className="remove-button" onClick={removePage}>
+                        Delete
+                    </button>
+                </div>
                 <div className="text-black body-medium-regular">{page?.topText}</div>;
                 <div>
                     <ul className="flex flex-col gap-6">

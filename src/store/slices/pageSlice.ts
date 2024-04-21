@@ -21,11 +21,12 @@ export const addPage = createAsyncThunk('pages/addPage', async (pageData) => {
     return response.json();
 });
 
-export const deletePage = createAsyncThunk('pages/deletePage', async (pageId) => {
-    await fetch(`http://localhost:3000/pages/${pageId}`, {
+export const deletePage = createAsyncThunk('pages/deletePage', async (pageId: string) => {
+    const response = await fetch(`http://localhost:3000/pages/${pageId}`, {
         method: 'DELETE',
     });
-    return pageId;
+    const res = await response.json();
+    return res.id;
 });
 
 export const updatePage = createAsyncThunk(
@@ -76,6 +77,10 @@ const pageSlice = createSlice({
             state.pages = action.payload;
             state.currentPage = action.payload[0];
         });
+        builder.addCase(deletePage.fulfilled, (state, action: PayloadAction<IPage['_id']>) => {
+            state.pages = state.pages.filter((page) => page._id !== action.payload);
+            state.currentPage = state.pages[0];
+        });
     },
 });
 
@@ -86,6 +91,7 @@ export const { nextPage, previousPage, setCurrentPage } = pageSlice.actions;
 export const pagesState = (state: IStore) => state.page.pages;
 export const numberOfPagesState = (state: IStore) => state.page.pages.length;
 export const currentPageState = (state: IStore) => state.page.currentPage;
+export const currentPageIdState = (state: IStore) => state.page.currentPage?._id;
 export const currentPageIndexState = (state: IStore) =>
     pagesState(state).findIndex((page) => currentPageState(state)?._id === page._id);
 // {

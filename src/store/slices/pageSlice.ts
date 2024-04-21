@@ -29,24 +29,23 @@ export const deletePage = createAsyncThunk('pages/deletePage', async (pageId: st
     return res.id;
 });
 
-export const updatePage = createAsyncThunk(
-    'pages/updatePage',
-    async ({ pageId, pageData }: { pageId: string; pageData: IPage }) => {
-        const response = await fetch(`http://localhost:3000/pages/${pageId}`, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(pageData),
-        });
-        return response.json();
-    },
-);
+export const updatePage = createAsyncThunk('pages/updatePage', async (page: IPage) => {
+    const { _id, ...rest } = page;
+    const response = await fetch(`http://localhost:3000/pages/${_id}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(rest),
+    });
+    return response.json();
+});
 
 const initialState: IPageState = {
     pages: [],
     currentPage: null,
     isShowPopup: false,
+    isShowEditPopup: false,
 };
 
 const pageSlice = createSlice({
@@ -77,6 +76,10 @@ const pageSlice = createSlice({
         },
         hidePopup: (state: Draft<IPageState>) => {
             state.isShowPopup = false;
+            state.isShowEditPopup = false;
+        },
+        showEditPopup: (state: Draft<IPageState>) => {
+            state.isShowEditPopup = true;
         },
     },
     extraReducers: (builder) => {
@@ -91,6 +94,18 @@ const pageSlice = createSlice({
         builder.addCase(addPage.fulfilled, (state, action: PayloadAction<IPage>) => {
             state.pages = [...state.pages, action.payload];
             state.isShowPopup = false;
+            state.isShowEditPopup = false;
+            state.currentPage = action.payload;
+        });
+        builder.addCase(updatePage.fulfilled, (state, action: PayloadAction<IPage>) => {
+            state.isShowPopup = false;
+            state.isShowEditPopup = false;
+            state.pages = state.pages.map((page) => {
+                if (page._id === action.payload._id) {
+                    return action.payload;
+                }
+                return page;
+            });
             state.currentPage = action.payload;
         });
     },
@@ -98,10 +113,12 @@ const pageSlice = createSlice({
 
 export default pageSlice.reducer;
 
-export const { nextPage, previousPage, setCurrentPage, showPopup, hidePopup } = pageSlice.actions;
+export const { nextPage, previousPage, setCurrentPage, showPopup, hidePopup, showEditPopup } =
+    pageSlice.actions;
 
 export const pagesState = (state: IStore) => state.page.pages;
 export const isShowPopupState = (state: IStore) => state.page.isShowPopup;
+export const isShowEditPopupState = (state: IStore) => state.page.isShowEditPopup;
 export const numberOfPagesState = (state: IStore) => state.page.pages.length;
 export const currentPageState = (state: IStore) => state.page.currentPage;
 export const currentPageIdState = (state: IStore) => state.page.currentPage?._id;

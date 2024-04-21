@@ -16,4 +16,5 @@ export interface IPageState {
     pages: IPage[];
     currentPage: IPage | null | undefined;
     isShowPopup: boolean;
+    isShowEditPopup: boolean;
 }

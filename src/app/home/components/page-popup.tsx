@@ -1,9 +1,16 @@
 'use client';
 
 import { IListItem } from '@/shared/types/page.types';
-import { addPage, hidePopup } from '@/store/slices/pageSlice';
+import {
+    addPage,
+    currentPageState,
+    hidePopup,
+    isShowEditPopupState,
+    updatePage,
+} from '@/store/slices/pageSlice';
 import { useDispatch } from '@/store/store';
-import { ChangeEvent, FormEvent, useState } from 'react';
+import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 
 export default function PagePopup() {
     const dispatch = useDispatch();
@@ -15,6 +22,18 @@ export default function PagePopup() {
         bold: '',
         regular: '',
     });
+    const currentPage = useSelector(currentPageState);
+    const isShowEditPopup = useSelector(isShowEditPopupState);
+    useEffect(() => {
+        if (isShowEditPopup && currentPage) {
+            setFormData({
+                ...currentPage,
+                bold: '',
+                regular: '',
+            });
+            setList(currentPage.list);
+        }
+    }, []);
     const [list, setList] = useState<IListItem[]>([]);
     const [error, setErrors] = useState({
         name: null as string | null,
@@ -46,7 +65,11 @@ export default function PagePopup() {
         e.preventDefault();
         // eslint-disable-next-line no-unused-vars
         const { bold, regular, ...rest } = formData;
-        dispatch(addPage({ ...rest, list }));
+        if (isShowEditPopup) {
+            dispatch(updatePage({ ...rest, list, _id: currentPage?._id ?? '' }));
+        } else {
+            dispatch(addPage({ ...rest, list }));
+        }
     };
     const addItem = (): void => {
         setList([...list, { bold: formData.bold, regular: formData.regular }]);

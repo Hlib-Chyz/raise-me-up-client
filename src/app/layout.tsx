@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Open_Sans } from 'next/font/google';
 import React from 'react';
 import './globals.css';
+import StoreProvider from './StoreProvider';
 
 const openSans = Open_Sans({
     subsets: ['latin'],
@@ -20,7 +21,9 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="en" className={`h-full ${openSans.className}`}>
-            <body>{children}</body>
+            <StoreProvider>
+                <body>{children}</body>
+            </StoreProvider>
         </html>
     );
 }

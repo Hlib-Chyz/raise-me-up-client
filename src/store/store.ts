@@ -1,13 +1,11 @@
 import { IDataState } from '@/shared/types/data.types';
-import { IPageState, IPaginationState } from '@/shared/types/page.types';
+import { IPageState } from '@/shared/types/page.types';
 import { configureStore } from '@reduxjs/toolkit';
 import { useDispatch as useDispatchBase, useSelector as useSelectorBase } from 'react-redux';
 import dataSlice from './slices/dataSlice';
-import pagesSlice from './slices/pagesSlice';
-import paginationSlice from './slices/paginationSlice';
+import pagesSlice from './slices/pageSlice';
 
 export interface IStore {
-    pagination: IPaginationState;
     data: IDataState;
     page: IPageState;
 }
@@ -15,7 +13,6 @@ export interface IStore {
 export const makeStore = () =>
     configureStore<IStore>({
         reducer: {
-            pagination: paginationSlice,
             data: dataSlice,
             page: pagesSlice,
         },

@@ -1,15 +1,19 @@
 'use client';
 import {
-    getCurrentPageState,
-    getPaginationState,
+    currentPageIndexState,
+    currentPageState,
+    numberOfPagesState,
+    pagesState,
     setCurrentPage,
-} from '@/store/slices/paginationSlice';
+} from '@/store/slices/pageSlice';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 export default function Pagination() {
-    const { currentPage, pages } = useSelector(getPaginationState);
-    const currentTab = useSelector(getCurrentPageState);
+    const pages = useSelector(pagesState);
+    const currentPage = useSelector(currentPageState);
+    const currentPageIndex = useSelector(currentPageIndexState);
+    const numberOfPages = useSelector(numberOfPagesState);
     const dispatch = useDispatch();
     return (
         <>
@@ -18,9 +22,9 @@ export default function Pagination() {
                     <React.Fragment key={page._id}>
                         <button
                             onClick={() => dispatch(setCurrentPage(page._id))}
-                            className={`flex gap-12 body-medium-bold text-light-grey items-center ${currentPage === page._id ? 'text-purple' : ''}`}>
+                            className={`flex gap-12 body-medium-bold text-light-grey items-center ${currentPage?._id === page._id ? 'text-purple' : ''}`}>
                             <div
-                                className={`h-28 w-28 flex items-center justify-center bg-light-grey text-white rounded-4 ${currentPage === page._id ? 'text-white bg-purple' : ''}`}>
+                                className={`h-28 w-28 flex items-center justify-center bg-light-grey text-white rounded-4 ${currentPage?._id === page._id ? 'text-white bg-purple' : ''}`}>
                                 {index + 1}
                             </div>
                             <div>{page.name}</div>
@@ -33,9 +37,9 @@ export default function Pagination() {
                 ))}
             </div>
             <div className="h-52 px-16 flex items-center justify-between bg-purple text-white desktop:hidden">
-                <div className="body-medium-bold">{currentTab?.name}</div>
+                <div className="body-medium-bold">{currentPage?.name}</div>
                 <div className="forms-hint">
-                    {/* {(currentTab?._id ?? 0) + 1} of {pages.length} */}
+                    {currentPageIndex + 1} of {numberOfPages}
                 </div>
             </div>
         </>

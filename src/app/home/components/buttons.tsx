@@ -1,22 +1,27 @@
 'use client';
-import { getPaginationState, setCurrentPage } from '@/store/slices/paginationSlice';
-import React from 'react';
+import {
+    currentPageIndexState,
+    nextPage,
+    numberOfPagesState,
+    previousPage,
+} from '@/store/slices/pageSlice';
 import { useDispatch, useSelector } from 'react-redux';
 
 export default function Buttons() {
     const dispatch = useDispatch();
-    const { currentPage, pages } = useSelector(getPaginationState);
+    const currentPageIndex = useSelector(currentPageIndexState);
+    const numberOfPages = useSelector(numberOfPagesState);
     return (
         <div className="bg-white h-68 flex items-center justify-between border-t border-light-grey fixed bottom-0 left-0 w-full px-16 desktop:px-88">
             <button
-                onClick={() => dispatch(setCurrentPage(currentPage - 1))}
-                disabled={currentPage === 0}
+                onClick={() => dispatch(previousPage())}
+                disabled={currentPageIndex === 0}
                 className="secondary-button">
                 Previous
             </button>
             <button
-                onClick={() => dispatch(setCurrentPage(currentPage + 1))}
-                disabled={currentPage === pages.length - 1}
+                onClick={() => dispatch(nextPage())}
+                disabled={currentPageIndex === numberOfPages - 1}
                 className="primary-button">
                 Next
             </button>

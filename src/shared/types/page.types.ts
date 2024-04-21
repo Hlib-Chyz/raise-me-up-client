@@ -1,8 +1,3 @@
-export interface IPaginationState {
-    currentPage: string;
-    pages: IPage[];
-}
-
 export interface IPage {
     readonly _id: string;
     name: string;
@@ -19,4 +14,5 @@ export interface IListItem {
 
 export interface IPageState {
     pages: IPage[];
+    currentPage: IPage | null | undefined;
 }

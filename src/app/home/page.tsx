@@ -1,21 +1,24 @@
 'use client';
-import StoreProvider from '../StoreProvider';
+import { fetchPages } from '@/store/slices/pageSlice';
+import { useDispatch } from '@/store/store';
+import { useEffect } from 'react';
 import Buttons from './components/buttons';
-import Content from './components/content';
+import ContentServer from './components/content.server';
 import Header from './components/header';
-import PagePopup from './components/page-popup';
 import Pagination from './components/pagination';
 
 export default function Home() {
+    const dispatch = useDispatch();
+    useEffect(() => {
+        dispatch(fetchPages());
+    }, [dispatch]);
     return (
-        <StoreProvider>
-            <div>
-                <Header />
-                <Pagination />
-                <Content />
-                <Buttons />
-                <PagePopup />
-            </div>
-        </StoreProvider>
+        <div>
+            <Header />
+            <Pagination />
+            <ContentServer />
+            <Buttons />
+            {/* <PagePopup /> */}
+        </div>
     );
 }

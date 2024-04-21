@@ -4,12 +4,13 @@ import {
     fetchPages,
     isShowEditPopupState,
     isShowPopupState,
-    showEditPopup,
 } from '@/store/slices/pageSlice';
 import { useDispatch } from '@/store/store';
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import Buttons from './components/buttons';
+import ContentClient from './components/content.client';
+import ContentServer from './components/content.server';
 import Header from './components/header';
 import PagePopup from './components/page-popup';
 import Pagination from './components/pagination';
@@ -22,19 +23,12 @@ export default function Home() {
     useEffect(() => {
         dispatch(fetchPages());
     }, [dispatch]);
-    const editPage = () => {
-        dispatch(showEditPopup());
-    };
+
     return (
         <div>
             <Header />
             <Pagination />
-
-            <div> {currentPage?.name}</div>
-            <button onClick={editPage} className="add-button">
-                Edit Page
-            </button>
-            {/* <ContentServer /> */}
+            {currentPage ? <ContentClient currentPage={currentPage} /> : <ContentServer />}
             <Buttons />
             {isShowPopup || isShowEditPopup ? <PagePopup /> : <></>}
         </div>

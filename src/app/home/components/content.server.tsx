@@ -8,5 +8,5 @@ export default async function ContentServer() {
     }
     const pages: IPage[] = await response.json();
 
-    return <Content currentPage={pages[0]} />;
+    return <Content page={pages[0]} />;
 }

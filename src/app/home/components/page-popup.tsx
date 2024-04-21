@@ -95,7 +95,7 @@ export default function PagePopup() {
         dispatch(hidePopup());
     };
     return (
-        <div className="fixed left-0 top-0 w-full h-full bg-black bg-opacity-40 flex flex-row items-center justify-center">
+        <div className="fixed left-0 p-16 top-0 w-full h-full bg-black bg-opacity-40 flex flex-row items-center justify-center">
             <form
                 onSubmit={handleSubmit}
                 className="p-16 flex flex-col gap-16 rounded-4 bg-white desktop:p-24 desktop:gap-16">

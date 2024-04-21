@@ -32,6 +32,9 @@
 .remove-button {
     @apply button text-white bg-red border-red;
 }
+.add-button {
+    @apply button text-white bg-green border-green;
+}
 .secondary-button {
     @apply button text-black bg-lighter-grey border-light-grey;
 }

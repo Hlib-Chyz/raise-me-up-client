@@ -1,4 +1,5 @@
 import { getNumberOfCommits } from '@/store/slices/dataSlice';
+import { showPopup } from '@/store/slices/pageSlice';
 import { useDispatch } from '@/store/store';
 import { useEffect, useState } from 'react';
 import { io } from 'socket.io-client';
@@ -16,9 +17,16 @@ export default function Header() {
         return () => {
             socket.disconnect();
         };
-    }, []);
+    }, [dispatch]);
+
+    const addPage = () => {
+        dispatch(showPopup());
+    };
     return (
-        <div className="h-72 flex flex-row items-center justify-end border-b border-light-grey bg-white px-16 desktop:px-88">
+        <div className="h-72 flex flex-row items-center justify-between border-b border-light-grey bg-white px-16 desktop:px-88">
+            <button onClick={addPage} className="add-button">
+                Add Page
+            </button>
             <div className="button-large text-purple">Total commits: {commits}</div>
         </div>
     );

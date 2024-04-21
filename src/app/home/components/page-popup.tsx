@@ -1,9 +1,12 @@
 'use client';
 
 import { IListItem } from '@/shared/types/page.types';
+import { addPage, hidePopup } from '@/store/slices/pageSlice';
+import { useDispatch } from '@/store/store';
 import { ChangeEvent, FormEvent, useState } from 'react';
 
 export default function PagePopup() {
+    const dispatch = useDispatch();
     const [formData, setFormData] = useState({
         name: '',
         heading: '',
@@ -43,7 +46,7 @@ export default function PagePopup() {
         e.preventDefault();
         // eslint-disable-next-line no-unused-vars
         const { bold, regular, ...rest } = formData;
-        console.log({ ...rest, list });
+        dispatch(addPage({ ...rest, list }));
     };
     const addItem = (): void => {
         setList([...list, { bold: formData.bold, regular: formData.regular }]);
@@ -64,6 +67,9 @@ export default function PagePopup() {
             !formData.bottomText ||
             !list.length
         );
+    };
+    const cancel = (): void => {
+        dispatch(hidePopup());
     };
     return (
         <div className="fixed left-0 top-0 w-full h-full bg-black bg-opacity-40 flex flex-row items-center justify-center">
@@ -156,7 +162,7 @@ export default function PagePopup() {
                     </button>
                 </div>
                 <div className="flex flex-row gap-12 w-full">
-                    <button type="button" className="secondary-button w-full">
+                    <button onClick={cancel} type="button" className="secondary-button w-full">
                         Cancel
                     </button>
                     <button

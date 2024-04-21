@@ -10,13 +10,13 @@ export const fetchPages = createAsyncThunk('pages/fetchPages', async () => {
     return response.json();
 });
 
-export const addPage = createAsyncThunk('pages/addPage', async (pageData) => {
+export const addPage = createAsyncThunk('pages/addPage', async (page: Omit<IPage, '_id'>) => {
     const response = await fetch('http://localhost:3000/pages', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify(pageData),
+        body: JSON.stringify(page),
     });
     return response.json();
 });
@@ -46,6 +46,7 @@ export const updatePage = createAsyncThunk(
 const initialState: IPageState = {
     pages: [],
     currentPage: null,
+    isShowPopup: false,
 };
 
 const pageSlice = createSlice({
@@ -71,6 +72,12 @@ const pageSlice = createSlice({
         setCurrentPage: (state: Draft<IPageState>, action: PayloadAction<IPage['_id']>) => {
             state.currentPage = state.pages.find((page) => page._id === action.payload);
         },
+        showPopup: (state: Draft<IPageState>) => {
+            state.isShowPopup = true;
+        },
+        hidePopup: (state: Draft<IPageState>) => {
+            state.isShowPopup = false;
+        },
     },
     extraReducers: (builder) => {
         builder.addCase(fetchPages.fulfilled, (state, action) => {
@@ -81,14 +88,20 @@ const pageSlice = createSlice({
             state.pages = state.pages.filter((page) => page._id !== action.payload);
             state.currentPage = state.pages[0];
         });
+        builder.addCase(addPage.fulfilled, (state, action: PayloadAction<IPage>) => {
+            state.pages = [...state.pages, action.payload];
+            state.isShowPopup = false;
+            state.currentPage = action.payload;
+        });
     },
 });
 
 export default pageSlice.reducer;
 
-export const { nextPage, previousPage, setCurrentPage } = pageSlice.actions;
+export const { nextPage, previousPage, setCurrentPage, showPopup, hidePopup } = pageSlice.actions;
 
 export const pagesState = (state: IStore) => state.page.pages;
+export const isShowPopupState = (state: IStore) => state.page.isShowPopup;
 export const numberOfPagesState = (state: IStore) => state.page.pages.length;
 export const currentPageState = (state: IStore) => state.page.currentPage;
 export const currentPageIdState = (state: IStore) => state.page.currentPage?._id;

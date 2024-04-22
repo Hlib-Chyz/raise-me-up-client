@@ -1,81 +1,136 @@
 import { IListItem, IPage, IPageState } from '@/shared/types/page.types';
 import { Draft, PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { IStore } from '../store';
+import toast from 'react-hot-toast';
 
 export const fetchPages = createAsyncThunk('pages/fetchPages', async (): Promise<IPage[]> => {
-    const response = await fetch('http://localhost:3000/pages');
-    // toast.success('You did it!');
-    if (!response.ok) {
-        throw new Error('Failed to fetch pages');
+    try {
+        const response = await fetch('http://localhost:3000/pages');
+        const resBody = await response.json();
+        if (!response.ok) {
+            throw resBody.message;
+        }
+        return resBody;
+    } catch (e) {
+        toast.error(JSON.stringify(e));
+        throw e;
     }
-    return response.json();
 });
 
 export const addPage = createAsyncThunk(
     'pages/addPage',
     async (page: Omit<IPage, '_id'>): Promise<IPage> => {
-        const response = await fetch('http://localhost:3000/pages', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(page),
-        });
-        return response.json();
+        try {
+            const response = await fetch('http://localhost:3000/pages', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(page),
+            });
+            const resBody = await response.json();
+            if (!response.ok) {
+                throw resBody.message;
+            }
+            toast.success('You did it!');
+            return resBody;
+        } catch (e) {
+            toast.error(JSON.stringify(e));
+            throw e;
+        }
     },
 );
 
 export const deletePage = createAsyncThunk(
     'pages/deletePage',
     async (pageId: string): Promise<string> => {
-        const response = await fetch(`http://localhost:3000/pages/${pageId}`, {
-            method: 'DELETE',
-        });
-        const res = await response.json();
-        return res.id;
+        try {
+            const response = await fetch(`http://localhost:3000/pages/${pageId}`, {
+                method: 'DELETE',
+            });
+            const resBody = await response.json();
+            if (!response.ok) {
+                throw resBody.message;
+            }
+            toast.success('You did it!');
+            return resBody.id;
+        } catch (e) {
+            toast.error(JSON.stringify(e));
+            throw e;
+        }
     },
 );
 
 export const updatePage = createAsyncThunk(
     'pages/updatePage',
     async (page: IPage): Promise<IPage> => {
-        const { _id, ...rest } = page;
-        const response = await fetch(`http://localhost:3000/pages/${_id}`, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(rest),
-        });
-        return response.json();
+        try {
+            const { _id, ...rest } = page;
+            const response = await fetch(`http://localhost:3000/pages/${_id}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(rest),
+            });
+            const resBody = await response.json();
+            if (!response.ok) {
+                throw resBody.message;
+            }
+            toast.success('You did it!');
+            return resBody;
+        } catch (e) {
+            toast.error(JSON.stringify(e));
+            throw e;
+        }
     },
 );
 
 export const addListItem = createAsyncThunk(
     'pages/addListItem',
     async ({ id, item }: { id: string; item: IListItem }): Promise<IPage> => {
-        const response = await fetch(`http://localhost:3000/pages/add-list-item/${id}`, {
-            method: 'PATCH',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(item),
-        });
-        return response.json();
+        try {
+            const response = await fetch(`http://localhost:3000/pages/add-list-item/${id}`, {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(item),
+            });
+            const resBody = await response.json();
+            if (!response.ok) {
+                throw resBody.message;
+            }
+            toast.success('You did it!');
+            return resBody;
+        } catch (e) {
+            toast.error(JSON.stringify(e));
+            throw e;
+        }
     },
 );
 
 export const removeListItem = createAsyncThunk(
     'pages/removeListItem',
     async ({ id, item }: { id: string; item: IListItem }): Promise<IPage> => {
-        const response = await fetch(`http://localhost:3000/pages/remove-list-item/${id}`, {
-            method: 'PATCH',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(item),
-        });
-        return response.json();
+        try {
+            const response = await fetch(`http://localhost:3000/pages/remove-list-item/${id}`, {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(item),
+            });
+            const resBody = await response.json();
+            if (!response.ok) {
+                throw resBody.message;
+            }
+            toast.success('You did it!');
+            return resBody;
+        } catch (e) {
+            toast.error(JSON.stringify(e));
+            throw e;
+        }
     },
 );
 

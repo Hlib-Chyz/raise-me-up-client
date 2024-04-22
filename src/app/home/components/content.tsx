@@ -84,7 +84,7 @@ export default function Content({ page }: { page: IPage | null | undefined }): R
                                 <button
                                     disabled={page?.list.length === 1}
                                     onClick={() => removeItem(it)}
-                                    className="remove-button ml-12">
+                                    className="forms-hint border rounded-2 ml-6 border-light-grey p-6 bg-lighter-grey">
                                     Delete
                                 </button>
                             </li>

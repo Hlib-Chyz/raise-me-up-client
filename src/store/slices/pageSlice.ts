@@ -4,6 +4,7 @@ import { IStore } from '../store';
 
 export const fetchPages = createAsyncThunk('pages/fetchPages', async (): Promise<IPage[]> => {
     const response = await fetch('http://localhost:3000/pages');
+    // toast.success('You did it!');
     if (!response.ok) {
         throw new Error('Failed to fetch pages');
     }

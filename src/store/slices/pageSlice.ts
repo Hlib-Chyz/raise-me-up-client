@@ -1,4 +1,4 @@
-import { IPage, IPageState } from '@/shared/types/page.types';
+import { IListItem, IPage, IPageState } from '@/shared/types/page.types';
 import { Draft, PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { IStore } from '../store';
 
@@ -45,6 +45,34 @@ export const updatePage = createAsyncThunk(
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify(rest),
+        });
+        return response.json();
+    },
+);
+
+export const addListItem = createAsyncThunk(
+    'pages/addListItem',
+    async ({ id, item }: { id: string; item: IListItem }): Promise<IPage> => {
+        const response = await fetch(`http://localhost:3000/pages/add-list-item/${id}`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(item),
+        });
+        return response.json();
+    },
+);
+
+export const removeListItem = createAsyncThunk(
+    'pages/removeListItem',
+    async ({ id, item }: { id: string; item: IListItem }): Promise<IPage> => {
+        const response = await fetch(`http://localhost:3000/pages/remove-list-item/${id}`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(item),
         });
         return response.json();
     },
@@ -109,6 +137,24 @@ const pageSlice = createSlice({
         builder.addCase(updatePage.fulfilled, (state, action: PayloadAction<IPage>) => {
             state.isShowPopup = false;
             state.isShowEditPopup = false;
+            state.pages = state.pages.map((page) => {
+                if (page._id === action.payload._id) {
+                    return action.payload;
+                }
+                return page;
+            });
+            state.currentPage = action.payload;
+        });
+        builder.addCase(addListItem.fulfilled, (state, action: PayloadAction<IPage>) => {
+            state.pages = state.pages.map((page) => {
+                if (page._id === action.payload._id) {
+                    return action.payload;
+                }
+                return page;
+            });
+            state.currentPage = action.payload;
+        });
+        builder.addCase(removeListItem.fulfilled, (state, action: PayloadAction<IPage>) => {
             state.pages = state.pages.map((page) => {
                 if (page._id === action.payload._id) {
                     return action.payload;

@@ -1,14 +1,9 @@
 'use client';
-
 import { IListItem } from '@/shared/types/page.types';
-import {
-    addPage,
-    currentPageState,
-    hidePopup,
-    isShowEditPopupState,
-    updatePage,
-} from '@/store/slices/pageSlice';
+import { hidePopup } from '@/store/actions/pageActions';
+import { currentPageState, isShowEditPopupState } from '@/store/selectors/pageSelectors';
 import { useDispatch, useSelector } from '@/store/store';
+import { updatePage, addPage } from '@/store/thunks/pageThunks';
 import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 
 export default function PagePopup(): React.JSX.Element {
@@ -43,6 +38,7 @@ export default function PagePopup(): React.JSX.Element {
         bold: null as string | null,
         regular: null as string | null,
     });
+
     const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
         const { name, value } = e.target;
         setFormData({
@@ -94,6 +90,7 @@ export default function PagePopup(): React.JSX.Element {
     const cancel = (): void => {
         dispatch(hidePopup());
     };
+
     return (
         <div className="fixed left-0 p-16 top-0 w-full h-full bg-black bg-opacity-40 flex flex-row items-center justify-center">
             <form

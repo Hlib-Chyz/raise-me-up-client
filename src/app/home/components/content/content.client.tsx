@@ -1,15 +1,11 @@
 'use client';
 import { IListItem, IPage } from '@/shared/types/page.types';
-import {
-    addListItem,
-    currentPageIdState,
-    deletePage,
-    removeListItem,
-    showEditPopup,
-} from '@/store/slices/pageSlice';
 import { useDispatch, useSelector } from '@/store/store';
 import { ChangeEvent, useState } from 'react';
 import Content from './content';
+import { showEditPopup } from '@/store/actions/pageActions';
+import { currentPageIdState } from '@/store/selectors/pageSelectors';
+import { deletePage, addListItem, removeListItem } from '@/store/thunks/pageThunks';
 
 export default function ContentClient({
     currentPage,
@@ -18,12 +14,6 @@ export default function ContentClient({
 }): React.JSX.Element {
     const dispatch = useDispatch();
     const currentPageId = useSelector(currentPageIdState);
-    const removePage = (): void => {
-        dispatch(deletePage(currentPageId ?? ''));
-    };
-    const editPage = (): void => {
-        dispatch(showEditPopup());
-    };
     const [error, setErrors] = useState<IListItem>({
         bold: '',
         regular: '',
@@ -32,6 +22,13 @@ export default function ContentClient({
         bold: '',
         regular: '',
     });
+
+    const removePage = (): void => {
+        dispatch(deletePage(currentPageId ?? ''));
+    };
+    const editPage = (): void => {
+        dispatch(showEditPopup());
+    };
     const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
         const { name, value } = e.target;
         setFormData({

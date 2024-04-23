@@ -1,6 +1,6 @@
-import { getNumberOfCommits } from '@/store/slices/dataSlice';
-import { showPopup } from '@/store/slices/pageSlice';
+import { showPopup } from '@/store/actions/pageActions';
 import { useDispatch } from '@/store/store';
+import { getNumberOfCommits } from '@/store/thunks/githubThunks';
 import { useEffect, useState } from 'react';
 import { io } from 'socket.io-client';
 
@@ -18,10 +18,10 @@ export default function Header(): React.JSX.Element {
             socket.disconnect();
         };
     }, [dispatch]);
-
     const addPage = (): void => {
         dispatch(showPopup());
     };
+
     return (
         <div className="h-72 flex flex-row items-center justify-between border-b border-light-grey bg-white px-16 desktop:px-88">
             <button onClick={addPage} className="add-button">

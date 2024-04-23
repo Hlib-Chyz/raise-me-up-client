@@ -1,4 +1,4 @@
-import { IDataState } from '@/shared/types/data.types';
+import { IGithubState } from '@/shared/types/github.types';
 import { IPageState } from '@/shared/types/page.types';
 import {
     Dispatch,
@@ -10,11 +10,11 @@ import {
     configureStore,
 } from '@reduxjs/toolkit';
 import { useDispatch as useDispatchBase, useSelector as useSelectorBase } from 'react-redux';
-import dataSlice from './slices/dataSlice';
-import pagesSlice from './slices/pageSlice';
+import { pageSlice } from './slices/pageSlice';
+import { githubSlice } from './slices/githubSlice';
 
 export interface IStore {
-    data: IDataState;
+    github: IGithubState;
     page: IPageState;
 }
 
@@ -30,8 +30,8 @@ export const makeStore = (): EnhancedStore<
 > =>
     configureStore<IStore>({
         reducer: {
-            data: dataSlice,
-            page: pagesSlice,
+            github: githubSlice.reducer,
+            page: pageSlice.reducer,
         },
     });
 

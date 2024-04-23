@@ -1,11 +1,11 @@
 'use client';
+import { setCurrentPage } from '@/store/actions/pageActions';
 import {
-    currentPageIndexState,
-    currentPageState,
-    numberOfPagesState,
     pagesState,
-    setCurrentPage,
-} from '@/store/slices/pageSlice';
+    currentPageState,
+    currentPageIndexState,
+    numberOfPagesState,
+} from '@/store/selectors/pageSelectors';
 import { useDispatch, useSelector } from '@/store/store';
 import React from 'react';
 

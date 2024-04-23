@@ -1,10 +1,6 @@
 'use client';
-import {
-    currentPageIndexState,
-    nextPage,
-    numberOfPagesState,
-    previousPage,
-} from '@/store/slices/pageSlice';
+import { previousPage, nextPage } from '@/store/actions/pageActions';
+import { currentPageIndexState, numberOfPagesState } from '@/store/selectors/pageSelectors';
 import { useDispatch, useSelector } from '@/store/store';
 
 export default function Buttons(): React.JSX.Element {

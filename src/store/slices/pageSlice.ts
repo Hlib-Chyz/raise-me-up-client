@@ -1,138 +1,13 @@
-import { IListItem, IPage, IPageState } from '@/shared/types/page.types';
-import { Draft, PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { IStore } from '../store';
-import toast from 'react-hot-toast';
-
-export const fetchPages = createAsyncThunk('pages/fetchPages', async (): Promise<IPage[]> => {
-    try {
-        const response = await fetch('http://localhost:3000/pages');
-        const resBody = await response.json();
-        if (!response.ok) {
-            throw resBody.message;
-        }
-        return resBody;
-    } catch (e) {
-        toast.error(JSON.stringify(e));
-        throw e;
-    }
-});
-
-export const addPage = createAsyncThunk(
-    'pages/addPage',
-    async (page: Omit<IPage, '_id'>): Promise<IPage> => {
-        try {
-            const response = await fetch('http://localhost:3000/pages', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(page),
-            });
-            const resBody = await response.json();
-            if (!response.ok) {
-                throw resBody.message;
-            }
-            toast.success('You did it!');
-            return resBody;
-        } catch (e) {
-            toast.error(JSON.stringify(e));
-            throw e;
-        }
-    },
-);
-
-export const deletePage = createAsyncThunk(
-    'pages/deletePage',
-    async (pageId: string): Promise<string> => {
-        try {
-            const response = await fetch(`http://localhost:3000/pages/${pageId}`, {
-                method: 'DELETE',
-            });
-            const resBody = await response.json();
-            if (!response.ok) {
-                throw resBody.message;
-            }
-            toast.success('You did it!');
-            return resBody.id;
-        } catch (e) {
-            toast.error(JSON.stringify(e));
-            throw e;
-        }
-    },
-);
-
-export const updatePage = createAsyncThunk(
-    'pages/updatePage',
-    async (page: IPage): Promise<IPage> => {
-        try {
-            const { _id, ...rest } = page;
-            const response = await fetch(`http://localhost:3000/pages/${_id}`, {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(rest),
-            });
-            const resBody = await response.json();
-            if (!response.ok) {
-                throw resBody.message;
-            }
-            toast.success('You did it!');
-            return resBody;
-        } catch (e) {
-            toast.error(JSON.stringify(e));
-            throw e;
-        }
-    },
-);
-
-export const addListItem = createAsyncThunk(
-    'pages/addListItem',
-    async ({ id, item }: { id: string; item: IListItem }): Promise<IPage> => {
-        try {
-            const response = await fetch(`http://localhost:3000/pages/add-list-item/${id}`, {
-                method: 'PATCH',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(item),
-            });
-            const resBody = await response.json();
-            if (!response.ok) {
-                throw resBody.message;
-            }
-            toast.success('You did it!');
-            return resBody;
-        } catch (e) {
-            toast.error(JSON.stringify(e));
-            throw e;
-        }
-    },
-);
-
-export const removeListItem = createAsyncThunk(
-    'pages/removeListItem',
-    async ({ id, item }: { id: string; item: IListItem }): Promise<IPage> => {
-        try {
-            const response = await fetch(`http://localhost:3000/pages/remove-list-item/${id}`, {
-                method: 'PATCH',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(item),
-            });
-            const resBody = await response.json();
-            if (!response.ok) {
-                throw resBody.message;
-            }
-            toast.success('You did it!');
-            return resBody;
-        } catch (e) {
-            toast.error(JSON.stringify(e));
-            throw e;
-        }
-    },
-);
+import { IPage, IPageState } from '@/shared/types/page.types';
+import { Draft, PayloadAction, createSlice } from '@reduxjs/toolkit';
+import {
+    getPages,
+    deletePage,
+    addPage,
+    updatePage,
+    addListItem,
+    removeListItem,
+} from '../thunks/pageThunks';
 
 const initialState: IPageState = {
     pages: [],
@@ -141,8 +16,8 @@ const initialState: IPageState = {
     isShowEditPopup: false,
 };
 
-const pageSlice = createSlice({
-    name: 'pages',
+export const pageSlice = createSlice({
+    name: 'page',
     initialState,
     reducers: {
         nextPage: (state: Draft<IPageState>) => {
@@ -176,7 +51,7 @@ const pageSlice = createSlice({
         },
     },
     extraReducers: (builder) => {
-        builder.addCase(fetchPages.fulfilled, (state, action) => {
+        builder.addCase(getPages.fulfilled, (state, action) => {
             state.pages = action.payload;
             state.currentPage = action.payload[0];
         });
@@ -221,18 +96,3 @@ const pageSlice = createSlice({
         });
     },
 });
-
-export default pageSlice.reducer;
-
-export const { nextPage, previousPage, setCurrentPage, showPopup, hidePopup, showEditPopup } =
-    pageSlice.actions;
-
-export const pagesState = (state: IStore): IPage[] => state.page.pages;
-export const isShowPopupState = (state: IStore): boolean => state.page.isShowPopup;
-export const isShowEditPopupState = (state: IStore): boolean => state.page.isShowEditPopup;
-export const numberOfPagesState = (state: IStore): number => state.page.pages.length;
-export const currentPageState = (state: IStore): IPage | null | undefined => state.page.currentPage;
-export const currentPageIdState = (state: IStore): string | null | undefined =>
-    state.page.currentPage?._id;
-export const currentPageIndexState = (state: IStore): number =>
-    pagesState(state).findIndex((page) => currentPageState(state)?._id === page._id);

@@ -9,10 +9,12 @@
         "lint": "next lint",
         "format:json": "prettier --write \"**/*.json\"",
         "prepare": "husky",
-        "test": "jest"
+        "test": "jest",
+        "test:watch": "jest --watch"
     },
     "dependencies": {
         "@reduxjs/toolkit": "^2.2.3",
+        "@testing-library/user-event": "^14.5.2",
         "axios": "^1.6.8",
         "next": "14.1.4",
         "react": "^18",

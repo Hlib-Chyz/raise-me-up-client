@@ -1,7 +1,8 @@
 'use client';
-import { previousPage, nextPage } from '@/store/actions/pageActions';
+import { nextPage, previousPage } from '@/store/actions/pageActions';
 import { currentPageIndexState, numberOfPagesState } from '@/store/selectors/pageSelectors';
 import { useDispatch, useSelector } from '@/store/store';
+import React from 'react';
 
 export default function Buttons(): React.JSX.Element {
     const dispatch = useDispatch();

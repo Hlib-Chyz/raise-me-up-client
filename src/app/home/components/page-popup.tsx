@@ -97,8 +97,11 @@ export default function PagePopup(): React.JSX.Element {
                 onSubmit={handleSubmit}
                 className="p-16 flex flex-col gap-16 rounded-4 bg-white desktop:p-24 desktop:gap-16">
                 <div className="flex flex-col">
-                    <label className="label">Name *</label>
+                    <label htmlFor="name" className="label">
+                        Name *
+                    </label>
                     <input
+                        id="name"
                         className={error.name ? 'invalid' : ''}
                         type="text"
                         name="name"
@@ -107,8 +110,11 @@ export default function PagePopup(): React.JSX.Element {
                     />
                 </div>
                 <div className="flex flex-col">
-                    <label className="label">Heading *</label>
+                    <label htmlFor="heading" className="label">
+                        Heading *
+                    </label>
                     <input
+                        id="heading"
                         className={error.heading ? 'invalid' : ''}
                         type="text"
                         name="heading"
@@ -117,8 +123,11 @@ export default function PagePopup(): React.JSX.Element {
                     />
                 </div>
                 <div className="flex flex-col">
-                    <label className="label">Top Text *</label>
+                    <label htmlFor="top-text" className="label">
+                        Top Text *
+                    </label>
                     <input
+                        id="top-text"
                         className={error.topText ? 'invalid' : ''}
                         type="text"
                         name="topText"
@@ -127,8 +136,11 @@ export default function PagePopup(): React.JSX.Element {
                     />
                 </div>
                 <div className="flex flex-col">
-                    <label className="label">Bottom Text *</label>
+                    <label htmlFor="bottom-text" className="label">
+                        Bottom Text *
+                    </label>
                     <input
+                        id="bottom-text"
                         className={error.bottomText ? 'invalid' : ''}
                         type="text"
                         name="bottomText"

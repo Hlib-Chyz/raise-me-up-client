@@ -20,7 +20,7 @@ const config: Config = {
     // moduleNameMapper: {
     //   "^@/(.*)$": "<rootDir>/src/$1"
     // },
-    // setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],
+    setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
     // globals: {
     //     'ts-jest': {
     //         tsconfig: 'tsconfig.jest.json', // Optional: specific tsconfig for Jest

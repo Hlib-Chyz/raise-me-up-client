@@ -12,7 +12,6 @@
             },
             "extends": [
                 "eslint:recommended",
-                "plugin:@next/next/recommended",
                 "plugin:prettier/recommended",
                 "plugin:@typescript-eslint/recommended",
                 "next"

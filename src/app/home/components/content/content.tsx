@@ -1,4 +1,5 @@
 'use client';
+import React from 'react';
 import { IPage } from '@/shared/types/page.types';
 import { MouseEventHandler } from 'react';
 

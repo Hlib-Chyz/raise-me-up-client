@@ -1,3 +1,4 @@
+import React from 'react';
 import { axiosInstance } from '@/shared/axios';
 import Content from './content';
 import { IResponse } from '@/shared/types/response.types';

@@ -1,4 +1,5 @@
 'use client';
+import React from 'react';
 import { setCurrentPage } from '@/store/actions/pageActions';
 import {
     pagesState,
@@ -7,7 +8,6 @@ import {
     numberOfPagesState,
 } from '@/store/selectors/pageSelectors';
 import { useDispatch, useSelector } from '@/store/store';
-import React from 'react';
 
 export default function Pagination(): React.JSX.Element {
     const pages = useSelector(pagesState);

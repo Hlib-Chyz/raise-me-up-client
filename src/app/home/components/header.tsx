@@ -1,3 +1,4 @@
+import React from 'react';
 import { showPopup } from '@/store/actions/pageActions';
 import { useDispatch } from '@/store/store';
 import { getNumberOfCommits } from '@/store/thunks/githubThunks';
